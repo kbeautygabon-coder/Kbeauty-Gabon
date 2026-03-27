@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>K-Beauty GABON – Télécharger PNG</title>
+<style>
+  body {
+    background: #111;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    font-family: Georgia, serif;
+    color: #e8b84b;
+    margin: 0;
+  }
+  h2 { letter-spacing: 4px; margin-bottom: 8px; }
+  p { color: #c8a96e; font-size: 13px; letter-spacing: 2px; margin-bottom: 24px; }
+  canvas { border-radius: 50%; box-shadow: 0 0 40px rgba(232,184,75,0.3); }
+  button {
+    margin-top: 28px;
+    background: linear-gradient(135deg, #e8b84b, #c9872a);
+    color: #0a0a0a;
+    border: none;
+    padding: 14px 40px;
+    font-size: 15px;
+    font-family: Georgia, serif;
+    letter-spacing: 4px;
+    font-weight: bold;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(232,184,75,0.4);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 28px rgba(232,184,75,0.6);
+  }
+</style>
+</head>
+<body>
+
+<h2>K-BEAUTY GABON</h2>
+<p>PHOTO DE PROFIL TIKTOK</p>
+
+<canvas id="c" width="500" height="500"></canvas>
+
+<button onclick="downloadPNG()">⬇ TÉLÉCHARGER EN PNG</button>
+
+<script>
+const canvas = document.getElementById('c');
+const ctx = canvas.getContext('2d');
+const W = 500, H = 500, cx = 250, cy = 250;
+
+function gold() { return '#e8b84b'; }
+function cream() { return '#f5d98b'; }
+function darkGold() { return '#c9872a'; }
+function rose() { return '#d4517a'; }
+
+function drawLogo() {
+  ctx.clearRect(0, 0, W, H);
+
+  // Circular clip
+  ctx.save();
+  ctx.beginPath();
+  ctx.arc(cx, cy, 250, 0, Math.PI * 2);
+  ctx.clip();
+
+  // Background gradient
+  const bg = ctx.createRadialGradient(cx, cy, 0, cx, cy, 250);
+  bg.addColorStop(0, '#1a0a12');
+  bg.addColorStop(1, '#0a0308');
+  ctx.fillStyle = bg;
+  ctx.fillRect(0, 0, W, H);
+
+  // Ambient glow
+  const ag = ctx.createRadialGradient(370, 120, 0, 370, 120, 180);
+  ag.addColorStop(0, 'rgba(232,86,122,0.07)');
+  ag.addColorStop(1, 'rgba(0,0,0,0)');
+  ctx.fillStyle = ag;
+  ctx.fillRect(0, 0, W, H);
+
+  ctx.restore();
+
+  // Outer rings
+  ctx.save();
+  ctx.beginPath();
+  ctx.arc(cx, cy, 250, 0, Math.PI*2);
+  ctx.clip();
+
+  [[246, 0.35], [238, 0.15], [230, 0.08]].forEach(([r, op]) => {
+    ctx.beginPath();
+    ctx.arc(cx, cy, r, 0, Math.PI * 2);
+    ctx.strokeStyle = `rgba(232,184,75,${op})`;
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+  });
+
+  // Corner ornaments
+  function corner(x, y, dx, dy, op) {
+    ctx.strokeStyle = `rgba(232,184,75,${op})`;
+    ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x + dx*28, y); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x, y + dy*28); ctx.stroke();
+    ctx.beginPath(); ctx.arc(x, y, 2.5, 0, Math.PI*2);
+    ctx.fillStyle = `rgba(232,184,75,${op})`; ctx.fill();
+  }
+  corner(88, 112, 1, 1, 0.55);
+  corner(412, 388, -1, -1, 0.55);
+  corner(412, 112, -1, 1, 0.22);
+  corner(88, 388, 1, -1, 0.22);
+
+  // Emblem center
+  const kcx = 250, kcy = 200;
+
+  // Halo rings
+  [[150, 0.15], [134, 0.08]].forEach(([r, op]) => {
+    ctx.beginPath();
+    ctx.arc(kcx, kcy, r, 0, Math.PI*2);
+    ctx.strokeStyle = `rgba(232,184,75,${op})`;
+    ctx.lineWidth = 1;
+    ctx.stroke();
+  });
+
+  // Emblem circle glow
+  const eg = ctx.createRadialGradient(kcx, kcy, 60, kcx, kcy, 120);
+  eg.addColorStop(0, 'rgba(232,184,75,0.08)');
+  eg.addColorStop(1, 'rgba(0,0,0,0)');
+  ctx.fillStyle = eg;
+  ctx.beginPath(); ctx.arc(kcx, kcy, 120, 0, Math.PI*2); ctx.fill();
+
+  // Emblem circle
+  ctx.beginPath();
+  ctx.arc(kcx, kcy, 118, 0, Math.PI*2);
+  ctx.fillStyle = '#12050d';
+  ctx.fill();
+  const goldStroke = ctx.createLinearGradient(kcx-118, kcy-118, kcx+118, kcy+118);
+  goldStroke.addColorStop(0, '#f5d98b');
+  goldStroke.addColorStop(0.4, '#e8b84b');
+  goldStroke.addColorStop(1, '#c9872a');
+  ctx.strokeStyle = goldStroke;
+  ctx.lineWidth = 2.5;
+  ctx.stroke();
+
+  // K Letter
+  const goldFill = ctx.createLinearGradient(kcx-40, kcy-65, kcx+50, kcy+65);
+  goldFill.addColorStop(0, '#f5d98b');
+  goldFill.addColorStop(0.4, '#e8b84b');
+  goldFill.addColorStop(0.7, '#c9872a');
+  goldFill.addColorStop(1, '#f0c96d');
+
+  ctx.shadowColor = 'rgba(232,184,75,0.5)';
+  ctx.shadowBlur = 12;
+  ctx.fillStyle = goldFill;
+
+  const gx = kcx - 43, gy = kcy - 62, kw = 86, kh = 124, bw = 18;
+  // Vertical bar
+  ctx.fillRect(gx, gy, bw, kh);
+  // Upper arm
+  ctx.beginPath();
+  ctx.moveTo(gx+bw, gy+kh/2);
+  ctx.lineTo(gx+kw-4, gy);
+  ctx.lineTo(gx+kw+14, gy);
+  ctx.lineTo(gx+bw+18, gy+kh/2+3);
+  ctx.closePath(); ctx.fill();
+  // Lower arm
+  ctx.beginPath();
+  ctx.moveTo(gx+bw, gy+kh/2+3);
+  ctx.lineTo(gx+kw+14, gy+kh);
+  ctx.lineTo(gx+kw-4, gy+kh);
+  ctx.lineTo(gx+bw+18, gy+kh/2);
+  ctx.closePath(); ctx.fill();
+  // Notch
+  ctx.fillRect(gx+bw, gy+kh/2-2, 22, 13);
+
+  ctx.shadowBlur = 0;
+
+  // Cherry blossom
+  const bx = kcx, by = kcy - 118 + 16;
+  for (let i = 0; i < 5; i++) {
+    const angle = (i * 72 - 90) * Math.PI / 180;
+    ctx.save();
+    ctx.translate(bx, by);
+    ctx.rotate(angle);
+    ctx.beginPath();
+    ctx.ellipse(0, -13, 6, 10, 0, 0, Math.PI*2);
+    ctx.fillStyle = i % 2 === 0 ? 'rgba(212,81,122,0.88)' : 'rgba(232,116,143,0.88)';
+    ctx.fill();
+    ctx.restore();
+  }
+  ctx.beginPath(); ctx.arc(bx, by, 6, 0, Math.PI*2);
+  ctx.fillStyle = '#e8b84b'; ctx.fill();
+  ctx.beginPath(); ctx.arc(bx, by, 2.5, 0, Math.PI*2);
+  ctx.fillStyle = 'rgba(255,255,255,0.5)'; ctx.fill();
+
+  // ── TEXT ──────────────────────────────────────────────────
+  // K-Beauty
+  const tg = ctx.createLinearGradient(100, 340, 400, 390);
+  tg.addColorStop(0, '#f5d98b');
+  tg.addColorStop(0.4, '#e8b84b');
+  tg.addColorStop(0.7, '#c9872a');
+  tg.addColorStop(1, '#f0c96d');
+
+  ctx.shadowColor = 'rgba(232,184,75,0.4)';
+  ctx.shadowBlur = 10;
+  ctx.font = 'bold 56px Georgia, serif';
+  ctx.fillStyle = tg;
+  ctx.textAlign = 'center';
+  ctx.fillText('K-Beauty', cx, 378);
+  ctx.shadowBlur = 0;
+
+  // Shimmer line
+  const sl = ctx.createLinearGradient(95, 0, 405, 0);
+  sl.addColorStop(0, 'rgba(245,217,139,0)');
+  sl.addColorStop(0.5, 'rgba(255,255,255,0.85)');
+  sl.addColorStop(1, 'rgba(245,217,139,0)');
+  ctx.fillStyle = sl;
+  ctx.fillRect(95, 390, 310, 1.5);
+
+  // Rose dots
+  [[95, 391], [405, 391]].forEach(([x, y]) => {
+    ctx.beginPath(); ctx.arc(x, y, 3, 0, Math.PI*2);
+    ctx.fillStyle = 'rgba(212,81,122,0.9)'; ctx.fill();
+  });
+
+  // GABON
+  ctx.font = '400 22px Georgia, serif';
+  ctx.fillStyle = 'rgba(200,169,110,0.95)';
+  ctx.letterSpacing = '8px';
+  ctx.fillText('G  A  B  O  N', cx, 422);
+
+  // Tagline
+  ctx.font = '10px Georgia, serif';
+  ctx.fillStyle = 'rgba(212,81,122,0.82)';
+  ctx.fillText('✦  BEAUTÉ CORÉENNE  ✦', cx, 450);
+
+  ctx.restore();
+}
+
+drawLogo();
+
+function downloadPNG() {
+  const link = document.createElement('a');
+  link.download = 'k-beauty-gabon-tiktok.png';
+  link.href = canvas.toDataURL('image/png');
+  link.click();
+}
+</script>
+</body>
+</html>
